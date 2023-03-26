@@ -78,7 +78,7 @@ export const pgnTest2 = `[Event "?"]
 1. d4 { That's right! } 1... d5 { And the second move? } 2. Nc3 Nf6 { And the third move? } 3. Bf4 { Good job remembering! } 3... Bf5 { The Rapport-Jobava system is where natural moves lead to traps and surprises. } { [%cal Gf2f3] } 4. f3!? { An interesting move that black may not be prepared for. } 4... e6 { [%cal Gg2g4] } 5. g4 { We have a pawn storm! } 5... Bg6 { [%cal Gh2h4] } 6. h4 h5 { [%cal Gg4g5] } 7. g5 Nfd7 { [%cal Ge2e4] } 8. e4 dxe4 { [%cal Gf3e4] } 9. fxe4 { The center is ours! } 9... Bb4 { [%cal Gd1f3] } 10. Qf3 { And white is good. To learn deeper theory, go to the "Theory" chapter. } *
 `;
 
-export const pgnTest = `[Event "Korkoma's Study: Chapter 1"]
+export const pgnTest1 = `[Event "Korkoma's Study: Chapter 1"]
 [Site "https://lichess.org/study/7VOXyNBM/Ot8jErgi"]
 [Result "*"]
 [UTCDate "2023.03.26"]
@@ -90,7 +90,7 @@ export const pgnTest = `[Event "Korkoma's Study: Chapter 1"]
 
 1. e4 { [%csl Ge4][%cal Gg8f6] } 1... e5 2. Nf3 Nc6 *`;
 
-export const pgnTest6 = `[CourseTitle "Course Title Test!"]
+export const pgnTest = `[CourseTitle "Course Title Test!"]
 [Event "(draft) Win with the Jobava London System: ⚔️ The Bf5 line ⚔️"]
 [TFEN "rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"]
 [Site "https://lichess.org/study/kv0ztA91/3NpbNVId"]

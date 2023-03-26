@@ -49,9 +49,6 @@ export class Pgn {
                 FEN: startFEN
             });
         }
-        const courseDataJSON = JSON.stringify(course);
-        console.log(courseDataJSON);
-        // console.log(course);
     }
 
     parseVariation(board, moveText, moveNumber, teamColor, parentMove = null) {

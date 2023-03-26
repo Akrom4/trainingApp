@@ -9,9 +9,7 @@ export default function PgnReader(pgnData = null) {
 
     function pgnDisplay(pgnData){
         const pgn = pgnData ? new Pgn(pgnTest) : null ;
-        if(pgn){
-            pgn.parseData();
-        }
+        
     }
 
     const data = pgnDisplay(pgnData);
