@@ -1,0 +1,9 @@
+#app{
+    display: flex;
+    height: 100vmin;
+    background-color: #D0CCD0;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+}
+

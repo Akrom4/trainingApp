@@ -1,0 +1,5 @@
+ref={ref => {
+                            if (ref && piece && piece.samePosition(new Position(i, j))) {
+                                piece.element = ref;
+                            }
+                        }}

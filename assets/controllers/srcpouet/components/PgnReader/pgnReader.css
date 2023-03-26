@@ -1,0 +1,22 @@
+#pgnBox{
+    border-radius: 5vmin;
+    background-color: #FBFCFF;
+    height: 76vmin;
+    width: 50vmin;
+    display: flex;
+    flex-direction: column;
+    padding: 2vmin 2vmin 2vmin 2vmin;
+    margin: 2vmin;
+    font-family: "Roboto";
+}
+
+.moves{
+    color: #214a7c;
+    font-weight: bold;
+    padding-bottom: 1vmin;
+    font-size: 1.3750em	;
+}
+
+.comments{
+    font-size: 1.2250em;
+}

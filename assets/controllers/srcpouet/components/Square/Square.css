@@ -1,0 +1,25 @@
+.square {
+    display: flex;
+    justify-items: center;
+}
+
+.whiteSquare{
+    background-color: #F0D9B7;
+}
+
+.blackSquare{
+    background-color: #B58866;
+
+}
+
+.piece{
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: contain;
+    width: 10vmin;
+    height: 10vmin;
+}
+
+*::selection {
+    background-color: transparent;
+  }
