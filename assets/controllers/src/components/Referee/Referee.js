@@ -3,6 +3,16 @@ import { column, initialBoard, PieceType, TeamType, fen } from "../../Constants"
 import { Piece, Position } from "../../models";
 import Chessboard from "../Chessboard/Chessboard";
 
+import whiteRook from '../../assets/images/chess_wr.svg';
+import whiteKnight from '../../assets/images/chess_wn.svg';
+import whiteBishop from '../../assets/images/chess_wb.svg';
+import whiteQueen from '../../assets/images/chess_wq.svg';
+import blackRook from '../../assets/images/chess_br.svg';
+import blackKnight from '../../assets/images/chess_bn.svg';
+import blackBishop from '../../assets/images/chess_bb.svg';
+import blackQueen from '../../assets/images/chess_bq.svg';
+
+
 export default function Referee() {
   // const [board,setBoard] = useState(testBoard);
   const [board, setBoard] = useState(initialBoard);
@@ -76,6 +86,8 @@ export default function Referee() {
     if (!promotion) return TeamType.W;
     return promotion.team;
   }
+
+
   // Place the modal in the column where the pawn was promoted
   /**
    *
@@ -130,31 +142,31 @@ export default function Referee() {
     <>
       <div id="promotion" className="hidden" ref={modalRef}>
         <div className="modalBody" ref={modalBodyRef}>
-          <div id="queen" onClick={() => promote(PieceType.QUEEN)}>
+        <div id="queen" onClick={() => promote(PieceType.QUEEN)}>
             <div
               style={{
-                backgroundImage: `url(echecsplus/images/chess_${promoteColor()}q.svg)`,
+                backgroundImage: `url(${promoteColor() === TeamType.W ? whiteQueen : blackQueen})`,
               }}
             />
           </div>
           <div id="knight" onClick={() => promote(PieceType.KNIGHT)}>
             <div
               style={{
-                backgroundImage: `url(echecsplus/images/chess_${promoteColor()}n.svg)`,
+                backgroundImage: `url(${promoteColor() === TeamType.W ? whiteKnight : blackKnight})`,
               }}
             />
           </div>
           <div id="rook" onClick={() => promote(PieceType.ROOK)}>
             <div
               style={{
-                backgroundImage: `url(echecsplus/images/chess_${promoteColor()}r.svg)`,
+                backgroundImage: `url(${promoteColor() === TeamType.W ? whiteRook : blackRook})`,
               }}
             />
           </div>
           <div id="bishop" onClick={() => promote(PieceType.BISHOP)}>
             <div
               style={{
-                backgroundImage: `url(echecsplus/images/chess_${promoteColor()}b.svg)`,
+                backgroundImage: `url(${promoteColor() === TeamType.W ? whiteBishop : blackBishop})`,
               }}
             />
           </div>

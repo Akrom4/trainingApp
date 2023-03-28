@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello ReactController!{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('chess') }}
+{% endblock %}  
 
 {% block body %}
     <div id="chess"></div>
