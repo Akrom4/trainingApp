@@ -15,14 +15,14 @@
             <th>Role</th> 
             <th>Creation</th>
             <th>Update</th>
-            {% if is_granted('admin') %}
+            {% if is_granted('ROLE_ADMIN') %}
                 <th>Update</th>
                 <th>Delete</th>
             {% endif %}
         </thead>
         <tbody>
-            {% if users is defined %}
-                {% for user in users %}
+            {% if user is defined %}
+                
                     <tr>
                         <td>{{user.id}}</td>
                         <td>{{user.username}}</td>
@@ -30,12 +30,10 @@
                         <td>{{user.roles ? user.roles|json_encode : ''}}</td>
                         <td>{{user.createdAt | date('Y/m/d H:i') }}</td>
                         <td>{{user.updatedAt | date('Y/m/d H:i') }}</td>
-                        {% if is_granted('admin') %}
-                            <td>updateLink</td>
-                            <td>deleteLink</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td><a href="{{ path('app_user_edit',{'id' : user.id}) }}" class="btn btn-success">Modifier</a></td>
+                            <td>{{ include('user/_delete_form.html.twig') }} </td>
                         {% endif %}
-                    </tr>
-                {% endfor %}
             {% endif %}
         </tbody>
     </table>

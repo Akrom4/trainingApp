@@ -32,8 +32,8 @@
                         <td>{{user.createdAt | date('Y/m/d H:i') }}</td>
                         <td>{{user.updatedAt | date('Y/m/d H:i') }}</td>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <td>updateLink</td>
-                            <td>deleteLink</td>
+                            <td><a href="{{ path('app_user_edit',{'id' : user.id}) }}" class="btn btn-success">Modifier</a></td>
+                            <td>{{ include('user/_delete_form.html.twig') }} </td>
                         {% endif %}
                     </tr>
                 {% endfor %}

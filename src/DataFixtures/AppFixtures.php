@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->safeEmail())
                 ->setPassword($hash)
                 ->setCreatedAt(new DateTimeImmutable());
-            $i === 1 ? $user->setRole(['ROLE_ADMIN']) : $user->setRole(['ROLE_USER']);
+            $i === 1 ? $user->setRoles(['ROLE_ADMIN']) : $user->setRoles(['ROLE_USER']);
             $manager->persist($user);
         }
         $manager->flush();
