@@ -29,8 +29,8 @@ class UserFormType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'label' => 'Roles',
                 'required' => false,
-                'expanded' => true, // This will render checkboxes
-                'multiple' => true, // This allows selecting multiple options
+                'expanded' => true, 
+                'multiple' => true, 
                 'choices' => [
                     'User' => 'ROLE_USER',
                     'Admin' => 'ROLE_ADMIN',
