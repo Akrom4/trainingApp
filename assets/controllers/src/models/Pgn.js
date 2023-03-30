@@ -49,6 +49,7 @@ export class Pgn {
                 FEN: startFEN
             });
         }
+        return course;
     }
 
     parseVariation(board, moveText, moveNumber, teamColor, parentMove = null) {

@@ -4,14 +4,17 @@ namespace App\Entity;
 
 use App\Repository\CoursesRepository;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
+#[ApiResource]
 class Courses
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

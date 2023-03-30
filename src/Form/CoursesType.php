@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CoursesType extends AbstractType
@@ -14,6 +15,10 @@ class CoursesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('title', TextType::class, [
+                'label' => 'title',
+                'required' => true,
+            ])
             ->add('description', TextType::class, [
                 'label' => 'description',
                 'required' => false,
@@ -22,11 +27,14 @@ class CoursesType extends AbstractType
                 'label' => 'image',
                 'required' => false,
             ])
-            ->add('pgndata', TextareaType::class, [
+            ->add('pgnText', TextareaType::class, [
                 'label' => 'Fichier Pgn',
                 'required' => false,
-                'attr' => ['class' => 'json-data'],
+                'mapped' => false,
                 'data' => '',
+                'attr' => [
+                    'id' => 'pgnText',
+                ],
             ])
         ;
     }

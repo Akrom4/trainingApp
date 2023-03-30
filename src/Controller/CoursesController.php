@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Courses;
 use App\Form\CoursesType;
 use App\Repository\CoursesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +21,10 @@ class CoursesController extends AbstractController
             'courses' => $coursesRepository->findAll(),
         ]);
     }
+    
     #[Route('/{id}/edit', name: 'app_courses_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_courses_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Courses $course = null ,CoursesRepository $coursesRepository): Response
+    public function new (Request $request, Courses $course = null, CoursesRepository $coursesRepository, EntityManagerInterface $entityManager): Response
     {
         if (!$course) {
             $course = new Courses();
@@ -34,11 +36,11 @@ class CoursesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pgndata = $form->get('pgndata')->getData();
-            if (!empty($pgndata)) {
-                $course->setPgndata($pgndata);
-            }
-            $coursesRepository->save($course, true);
+            $pgnData = $form->get('parsed_pgndata')->getData() ?: [];
+            $course->setPgndata($pgnData);
+
+            $entityManager->persist($course);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_courses_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -48,6 +50,7 @@ class CoursesController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_courses_show', methods: ['GET'])]
     public function show(Courses $course): Response
@@ -60,7 +63,7 @@ class CoursesController extends AbstractController
     #[Route('/{id}', name: 'app_courses_delete', methods: ['POST'])]
     public function delete(Request $request, Courses $course, CoursesRepository $coursesRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $course->getId(), $request->request->get('_token'))) {
             $coursesRepository->remove($course, true);
         }
 

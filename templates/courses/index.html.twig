@@ -29,10 +29,9 @@
 				{% if courses is defined %}
 					{% for course in courses %}
 						<tr>
-							<td>{{course.id}}</td>
-							<td>{{course.title}}</td>
+							<td>{{course.id}}</td>	
 							<td>
-								<a href="{{ path('app_courses_show',{'id' : course.id}) }}">{{course.id}}</a>
+								<a href="{{ path('app_courses_show',{'id' : course.id}) }}">{{course.title}}</a>
 							</td>
 							<td>{{course.description}}</td>
 							<td>{{ course.image }}</td>
@@ -41,7 +40,7 @@
 							<td>{{ course.updatedat ? course.updatedat|date('Y-m-d H:i') : '' }}</td>
 							{% if is_granted('ROLE_ADMIN') %}
 								<td>
-									<a href="{{ path('app_courses_edit',{'id' : user.id}) }}" class="btn btn-success">Modifier</a>
+									<a href="{{ path('app_courses_edit',{'id' : course.id}) }}" class="btn btn-success">Modifier</a>
 								</td>
 								<td>{{ include('courses/_delete_form.html.twig') }}
 								</td>
@@ -51,7 +50,6 @@
 				{% endif %}
 			</tbody>
 		</table>
-	</tbody>
 </div>
 <a href="{{ path('app_courses_new') }}">Create new</a>{% endblock %}{% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
