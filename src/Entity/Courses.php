@@ -8,7 +8,7 @@ use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
-#[ApiResource()]
+#[ApiResource]
 class Courses
 {
     #[ORM\Id]
