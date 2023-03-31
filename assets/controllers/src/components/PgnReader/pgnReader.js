@@ -1,19 +1,28 @@
+import React from 'react';
 import './pgnReader.css';
 import { Pgn } from "../../models";
-import { pgnTest } from "../../Constants";
 
 
+export default function PgnReader({ pgnData = null}) {
+  const chapters = pgnData && pgnData.chapter ? pgnData.chapter : [];
+    console.log(pgnData);
+    const renderMoves = (moves) => {
+        return moves.map((move, index) => (
+          <span key={index} className="moves" data-fen={move.position}>
+            {move.teamColor === 'w' && `${move.moveNumber}. `}
+            {move.move} &nbsp;
+          </span>
+        ));
+      };
 
-export default function PgnReader(pgnData = null) {
-    function pgnDisplay(pgnData) {
-        const pgn = pgnData ? new Pgn(pgnTest) : null;
-
-    }
-
-    const data = pgnDisplay(pgnData);
-
-    return (
-        <div id="pgnBox">
+  return (
+    <div id="pgnBox">
+      {chapters.map((chapter, index) => (
+        <div key={index}>
+          <h3>{chapter.Title}</h3>
+          <div>{renderMoves(chapter.Moves)}</div>
         </div>
-    );
+      ))}
+    </div>
+  );
 }

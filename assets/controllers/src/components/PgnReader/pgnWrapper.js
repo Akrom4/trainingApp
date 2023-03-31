@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Pgn } from '../../models';
+import axios from 'axios';
+
 
 
 const CoursesForm = () => {
@@ -19,10 +21,13 @@ const CoursesForm = () => {
     // Compute PGN data here
     const pgn = new Pgn(formData.pgnText);
     const parsedJson = pgn.parseData();
+    const createdAt = new Date().toISOString();
 
     // Send the data to Symfony backend
-    const data = { ...formData, pgnData: parsedJson };
-    // await axios.post('/your-symfony-endpoint', data);
+    const data = { ...formData, pgndata: parsedJson, createdat: createdAt};
+    console.log(data);
+    await axios.post('/api/courses', data);
+    
   };
 
   return (

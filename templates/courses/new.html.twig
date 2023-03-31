@@ -5,8 +5,10 @@
 {% block body %}
     <h1>Create new Courses</h1>
 
-    {{ include('courses/_form.html.twig') }}
-    <div id="chess" style="display: none;" ></div>
-    {{ encore_entry_script_tags('chess') }}
+    <div id="pgn-wrapper"></div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('pgnWrapper') }}
+{% endblock %}
     <a href="{{ path('app_courses_index') }}">back to list</a>
 {% endblock %}

@@ -36,8 +36,8 @@ class CoursesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pgnData = $form->get('parsed_pgndata')->getData() ?: [];
-            $course->setPgndata($pgnData);
+            
+
 
             $entityManager->persist($course);
             $entityManager->flush();

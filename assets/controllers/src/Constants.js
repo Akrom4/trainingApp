@@ -1,5 +1,6 @@
 import { Board, Pawn, King, Piece, Position, Rook } from "./models";
 
+
 export const row = ['1', '2', '3', '4', '5', '6', '7', '8'];
 export const column = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 export const PieceType = {

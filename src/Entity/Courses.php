@@ -2,13 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\CoursesRepository;
 use Doctrine\DBAL\Types\Types;
-use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CoursesRepository;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
-#[ApiResource]
+
+#[ApiResource(types: [], operations: [
+    new Get(),
+    new Post(security: "is_granted('ROLE_ADMIN')"),
+    new Put(security: "is_granted('ROLE_ADMIN')"),
+])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'description' => 'partial'])]
+
 class Courses
 {
     #[ORM\Id]
@@ -95,7 +107,7 @@ class Courses
 
     public function setCreatedat(\DateTimeImmutable $createdat): self
     {
-        $this->createdat = $createdat;
+        $createdat ? $this->createdat = $createdat : $this->createdat = new \DateTimeImmutable();
 
         return $this;
     }

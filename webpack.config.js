@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('chess', './assets/controllers/src/index.js')
+    .addEntry('pgnWrapper' , './assets/controllers/src/PgnCreate.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
