@@ -240,9 +240,9 @@ export default function Chessboard({ playMove, pieces, setOrientation, getOrient
         >
 
             {board}
-            {/* <div className="chessboard-nav"> */}
-                {/* <button onClick={rotateBoard}>Rotate Board</button> Add rotation button */}
-            {/* </div> */}
+            <div className="chessboard-nav">
+                {/* <button onClick={rotateBoard}>Rotate Board</button> */}
+            </div>
         </div>
     );
 }

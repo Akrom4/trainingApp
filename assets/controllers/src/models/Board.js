@@ -63,13 +63,14 @@ export class Board {
 
   pushMove(start, end) {
     const piece = this.pieces.find(p => p.samePosition(start));
-  
-    if (piece){ 
+
+    if (piece) {
       this.pieces = this.pieces.filter(p => !p.samePosition(end));
-      piece.position = end;}
+      piece.position = end;
+    }
   }
 
-  undoMove(){
+  undoMove() {
     this.turn = this.turn === TeamType.W ? TeamType.B : TeamType.W;
     return this.fenReader(this.lastPosition);
   }
@@ -160,7 +161,7 @@ export class Board {
     return { castle: false };
   }
 
-  playMove(destination, playedPiece) {
+  playMove(destination, playedPiece, promotionChoice = null) {
     const { inCheck, checkingPiece } = this.isKingInCheck(playedPiece, destination);
 
     if ((checkingPiece && !checkingPiece.samePosition(destination)) || inCheck) {
@@ -223,7 +224,8 @@ export class Board {
       this.pieces = this.pieces.reduce((results, piece) => {
         if (piece.samePosition(destination)) {
           return results; // The piece taken isn't added to the array
-        } else if (piece.samePosition(playedPiece.position)) {
+        }
+        else if (piece.samePosition(playedPiece.position)) {
           piece.enPassant =
             Math.abs(playedPiece.position.y - destination.y) === 2 &&
             piece.isPawn; // This pawn can be taken en passant
@@ -232,7 +234,10 @@ export class Board {
             piece.hasMoved = true; // King castle rule
           else if (piece.isRook)
             piece.hasMoved = true; // Rook castle rule
-
+          if (promotionChoice) {
+            const newPiece = this.createPromotedPiece(promotionChoice, destination, playedPiece.team);
+            results.push(newPiece); // Add the new promoted piece to the array
+          }
           results.push(piece); // Push the new piece position in the updatedPieces array
         } else {
           if (piece.isPawn) {
@@ -248,10 +253,27 @@ export class Board {
       return false;
     }
     this.setTurn(this.getTurn() === TeamType.W ? TeamType.B : TeamType.W);
-    if(playedPiece.team === TeamType.W)
+    if (playedPiece.team === TeamType.W)
       this.newMoveCount();
     this.validMoves();
     return true;
+  }
+
+  createPromotedPiece(promotionChoice, destination, team) {
+    let piece;
+    let type = pieceTypeFromChar(promotionChoice);
+
+    switch (type) {
+      case PieceType.ROOK:
+        piece = new Rook(destination, team, [], true);
+        break;
+      case PieceType.KING:
+        piece = new King(destination, team);
+        break;
+      default:
+        piece = new Piece(destination, type, team);
+    }
+    return piece;
   }
 
   getValidMoves(piece) {
@@ -610,7 +632,7 @@ export class Board {
       }
     }
     fen += ` ${this.turn}`;
-     
+
 
     // Castle rights
     const whiteKing = this.pieces.find(p => p.type === PieceType.KING && p.team === TeamType.W);

@@ -5,7 +5,7 @@ export function oppositeColor(color) {
 }
 
 export function removeAnnotations(move) {
-    return move.replace(/[!?+\-=/#)]+/g, '');
+    return move.replace(/[!?+\-/#)]+/g, '');
 }
 
 export function pieceTypeFromChar(char){
