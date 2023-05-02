@@ -179,15 +179,6 @@ export default function Referee() {
         getOrientation={getOrientation}
         teamTurn={teamTurn}
       />
-      <div className="readFen">
-        <button onClick={getFen}>getFen</button>
-      </div>
-      {/* <div className="pushMove">
-        <button onClick={pushMove}>Push move</button>
-      </div>
-      <div className="readFen">
-        <button onClick={readFen}>readFen</button>
-      </div> */}
     </>
   );
 }

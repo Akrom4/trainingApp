@@ -19,6 +19,7 @@ export class Pgn {
         }
 
         const chapters = this.pgnFile.split('\n\n\n');
+        
         const courseTitleLine = chapters.find(line => line.startsWith('[CourseTitle'));
         const courseTitle = courseTitleLine ? courseTitleLine.split('"')[1] : '';
         const course = new Course(courseTitle);
@@ -112,6 +113,7 @@ export class Pgn {
                 });
             } else {
                 this.pushPGNMove(board, token, teamColor);
+                console.log(token);
                 variation.moves.push({
                     move: token,
                     moveNumber: moveNumber,

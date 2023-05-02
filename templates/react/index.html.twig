@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReactController!{% endblock %}
+{% block title %}Training{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('chess') }}
 {% endblock %}  
 
 {% block body %}
     <div id="chess" data-pgnreader="{{ chapter|json_encode }}"></div>
-
 
     {{ encore_entry_script_tags('chess') }}
 {% endblock %}

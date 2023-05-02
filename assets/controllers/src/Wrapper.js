@@ -1,5 +1,6 @@
 import Referee from './components/Referee/Referee';
 import PgnWrapper from './components/PgnReader/pgnWrapper';
+import './wrapper.css';
 
 function Wrapper() {
   return (

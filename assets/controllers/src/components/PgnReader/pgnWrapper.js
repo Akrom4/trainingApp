@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Pgn } from '../../models';
 import axios from 'axios';
 
-
-
 const CoursesForm = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -18,7 +16,7 @@ const CoursesForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Compute PGN data here
+
     const pgn = new Pgn(formData.pgnText);
     const parsedJson = pgn.parseData();
     const createdAt = new Date().toISOString();
