@@ -168,9 +168,7 @@ export class Pgn {
     
             targetSquare = new Position(columnPiece, rowPiece);
         }
-        console.log(move);
         const movingPiece = this.findMovingPiece(board, move, movingPieceType, targetSquare, teamColor);
-        console.log(movingPiece);
         board.playMove(targetSquare, movingPiece, promotionType);
     }
     

@@ -16,7 +16,6 @@
 					<th>Title</th>
 					<th>Description</th>
 					<th>Image</th>
-					<th>Pgndata</th>
 					<th>Creation</th>
 					<th>Update</th>
 					{% if is_granted('ROLE_ADMIN') %}
@@ -35,7 +34,6 @@
 							</td>
 							<td>{{course.description}}</td>
 							<td>{{ course.image }}</td>
-							<td>{{ course.pgndata ? course.pgndata|json_encode : '' }}</td>
 							<td>{{ course.createdat ? course.createdat|date('Y-m-d H:i') : '' }}</td>
 							<td>{{ course.updatedat ? course.updatedat|date('Y-m-d H:i') : '' }}</td>
 							{% if is_granted('ROLE_ADMIN') %}

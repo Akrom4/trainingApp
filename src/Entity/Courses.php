@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CoursesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+
+
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
+
 
 #[ApiResource(types: [], operations: [
     new Get(),
@@ -26,8 +31,45 @@ class Courses
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    
+
     private ?int $id = null;
+
+
+    
+    #[ORM\OneToMany(mappedBy: "course", targetEntity: Chapters::class, orphanRemoval: true)]
+
+    private $chapters;
+    public function __construct()
+    {
+        $this->chapters = new ArrayCollection();
+    }
+
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
+    }
+
+    public function addChapter(Chapters $chapter): self
+    {
+        if (!$this->chapters->contains($chapter)) {
+            $this->chapters[] = $chapter;
+            $chapter->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChapter(Chapters $chapter): self
+    {
+        if ($this->chapters->contains($chapter)) {
+            $this->chapters->removeElement($chapter);
+            if ($chapter->getCourse() === $this) {
+                $chapter->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -37,9 +79,6 @@ class Courses
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
-
-    #[ORM\Column(nullable: true)]
-    private array $pgndata = [];
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdat = null;
@@ -88,18 +127,6 @@ class Courses
         return $this;
     }
 
-    public function getPgndata(): array
-    {
-        return $this->pgndata;
-    }
-
-    public function setPgndata(?array $pgndata): self
-    {
-        $this->pgndata = $pgndata;
-
-        return $this;
-    }
-
     public function getCreatedat(): ?\DateTimeImmutable
     {
         return $this->createdat;
@@ -123,4 +150,5 @@ class Courses
 
         return $this;
     }
+
 }

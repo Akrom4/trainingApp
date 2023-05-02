@@ -17,17 +17,19 @@ const CoursesForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Compute PGN data here
-    const pgn = new Pgn(formData.pgnText);
-    const parsedJson = pgn.parseData();
-    const createdAt = new Date().toISOString();
-
-    // Send the data to Symfony backend
-    const data = { ...formData, pgndata: parsedJson, createdat: createdAt};
-    console.log(data);
-    await axios.post('/api/courses', data);
-    
+    try {
+      e.preventDefault();
+      console.log('handleSubmit called');
+      const pgnText = formData.pgnText.trim();
+      const pgn = new Pgn(pgnText);
+      const parsedJson = pgn.parseData();
+      const createdAt = new Date().toISOString();
+      const data = { ...formData, pgndata: parsedJson, createdat: createdAt };
+      console.log(data);
+      await axios.post('/api/courses', data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

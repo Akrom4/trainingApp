@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Courses;
+use App\Entity\Chapters;
 use App\Form\CoursesType;
 use App\Repository\CoursesRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/courses')]
 class CoursesController extends AbstractController
@@ -21,10 +23,10 @@ class CoursesController extends AbstractController
             'courses' => $coursesRepository->findAll(),
         ]);
     }
-    
+
     #[Route('/{id}/edit', name: 'app_courses_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_courses_new', methods: ['GET', 'POST'])]
-    public function new (Request $request, Courses $course = null, CoursesRepository $coursesRepository, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, Courses $course = null, CoursesRepository $coursesRepository, EntityManagerInterface $entityManager): Response
     {
         if (!$course) {
             $course = new Courses();
@@ -36,8 +38,22 @@ class CoursesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
 
+            // Get the parsed JSON data from the request
+            $pgnData = json_decode($request->request->get('pgndata'), true);
+            var_dump($pgnData);
+
+            // Create and add chapters from the parsed JSON data
+            if ($pgnData && is_array($pgnData)) {
+                foreach ($pgnData as $chapterData) {
+                    $chapter = new Chapters();
+                    $chapter->setTitle($chapterData['title']);
+                    $chapter->setPgnData($chapterData['chapter']);
+                    $chapter->setCourse($course);
+                    $course->addChapter($chapter);
+                    $entityManager->persist($chapter);
+                }
+            }
 
             $entityManager->persist($course);
             $entityManager->flush();
@@ -50,7 +66,6 @@ class CoursesController extends AbstractController
             'form' => $form,
         ]);
     }
-
 
     #[Route('/{id}', name: 'app_courses_show', methods: ['GET'])]
     public function show(Courses $course): Response
