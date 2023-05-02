@@ -61,17 +61,17 @@ export class Pgn {
             variations: [],
             parentMove: parentMove
         };
-    
+
         let nestedMoveText = '';
         const parenthesesStack = [];
-    
+
         for (let i = 0; i < moveTokens.length; i++) {
             let token = moveTokens[i].trim();
-    
+
             if (token === '*' || token === '') {
                 continue;
             }
-    
+
             if (token === '(') {
                 parenthesesStack.push(token);
                 if (parenthesesStack.length === 1) {
@@ -85,7 +85,7 @@ export class Pgn {
                     const lastMove = variation.moves[variation.moves.length - 1];
                     const variationStartingPosition = variation.moves[variation.moves.length - 2];
                     const variationBoard = board.fenReader(variationStartingPosition.position);
-    
+
                     const nestedVariation = this.parseVariation(
                         variationBoard,
                         nestedMoveText.trim(),
@@ -94,7 +94,7 @@ export class Pgn {
                         lastMove
                     );
                     variation.variations.push(nestedVariation);
-    
+
                     nestedMoveText = '';
                 } else {
                     nestedMoveText += ' ' + token;
@@ -125,7 +125,7 @@ export class Pgn {
         }
         return variation;
     }
- 
+
     metaData(lines, string) {
         const startMetaDataLine = lines.find(line => line.startsWith(string));
         let metaData = '';
@@ -140,7 +140,8 @@ export class Pgn {
         const move = removeAnnotations(newmove);
         let movingPieceType;
         let targetSquare;
-
+        let promotionType = null;
+    
         if (move === "OO" || move === "OOO") {
             movingPieceType = PieceType.KING;
             const kingside = move === "OO";
@@ -151,20 +152,30 @@ export class Pgn {
             movingPieceType = (move.charAt(0) === move.charAt(0).toUpperCase())
                 ? pieceTypeFromChar(move.charAt(0))
                 : PieceType.PAWN;
-
+    
             const moveWithoutPieceType = movingPieceType === PieceType.PAWN ? move : move.substring(1);
-            const columnChar = moveWithoutPieceType.charAt(moveWithoutPieceType.length - 2);
-            const rowChar = moveWithoutPieceType.charAt(moveWithoutPieceType.length - 1);
-
+            // Check for promotion
+            const promotionMatch = moveWithoutPieceType.match(/=[QRBN]/);
+            let moveWithoutPromotion = move;
+    
+            if (promotionMatch) {
+                moveWithoutPromotion = move.replace(promotionMatch[0], '');
+                promotionType = pieceTypeFromChar(promotionMatch[0].charAt(1));
+            }
+            const columnChar = moveWithoutPromotion.charAt(moveWithoutPromotion.length - 2);
+            const rowChar = moveWithoutPromotion.charAt(moveWithoutPromotion.length - 1);
+    
             const columnPiece = column.indexOf(columnChar);
             const rowPiece = parseInt(rowChar) - 1;
-
+    
             targetSquare = new Position(columnPiece, rowPiece);
         }
+        console.log(move);
         const movingPiece = this.findMovingPiece(board, move, movingPieceType, targetSquare, teamColor);
-        board.playMove(targetSquare, movingPiece);
-
+        console.log(movingPiece);
+        board.playMove(targetSquare, movingPiece, promotionType);
     }
+    
 
     findMovingPiece(board, move, movingPieceType, targetSquare, teamColor) {
         // For castling moves, find the king of the current turn

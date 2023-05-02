@@ -42,11 +42,6 @@ export default function Referee() {
     let validMove = false;
     setBoard(() => {
       validMove = board.playMove(destination, playedPiece);
-      // if (validMove) {
-      //   board.setTurn(board.getTurn() === TeamType.W ? TeamType.B : TeamType.W);
-      //   if(playedPiece.team === TeamType.B)
-      //     board.newMoveCount();
-      // }
       return board.clone();
     });
     // Promotion rule
