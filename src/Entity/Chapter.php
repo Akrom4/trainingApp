@@ -19,8 +19,8 @@ class Chapter
     #[ORM\ManyToOne(inversedBy: 'chapters')]
     private ?Courses $course = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pgndata = null;
+    #[ORM\Column(nullable: true)]
+    private array $pgndata = [];
 
     public function getId(): ?int
     {
@@ -51,12 +51,12 @@ class Chapter
         return $this;
     }
 
-    public function getPgndata(): ?string
+    public function getPgndata(): array
     {
         return $this->pgndata;
     }
 
-    public function setPgndata(string $pgndata): self
+    public function setPgndata(?array $pgndata): self
     {
         $this->pgndata = $pgndata;
 
