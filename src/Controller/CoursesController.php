@@ -41,21 +41,18 @@ class CoursesController extends AbstractController
 
             // Get the parsed JSON data from the request
             $pgnData = json_decode($request->request->get('pgndata'), true);
-            var_dump($pgnData);
+            VarDumper::dump($pgnData);
 
+            
+            $entityManager->persist($course);
             // Create and add chapters from the parsed JSON data
-            if ($pgnData && is_array($pgnData)) {
-                foreach ($pgnData as $chapterData) {
                     $chapter = new Chapters();
-                    $chapter->setTitle($chapterData['title']);
-                    $chapter->setPgnData($chapterData['chapter']);
+                    $chapter->setTitle('test');
+                    $chapter->setPgnData($pgnData);
                     $chapter->setCourse($course);
                     $course->addChapter($chapter);
                     $entityManager->persist($chapter);
-                }
-            }
 
-            $entityManager->persist($course);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_courses_index', [], Response::HTTP_SEE_OTHER);
