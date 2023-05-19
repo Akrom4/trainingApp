@@ -6,12 +6,16 @@ const CoursesForm = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    image: '',
+    image: null, // Set initial state to null
     pgnText: '',
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'image') { // Special handling for file input
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -22,16 +26,26 @@ const CoursesForm = () => {
     const createdAt = new Date().toISOString();
 
     // Send the data to Symfony backend
-    const data = { ...formData, pgndata: parsedJson, createdat: createdAt};
+    const data = new FormData(); // Use FormData for file uploads
+    data.append('title', formData.title);
+    data.append('description', formData.description);
+    data.append('image', formData.image);
+    data.append('pgnText', formData.pgnText);
+    data.append('pgndata', parsedJson);
+    data.append('createdat', createdAt);
+
     console.log(data);
-    await axios.post('/api/courses', data);
-    
+    await axios.post('/api/courses', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data' // Required header for file uploads
+      }
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">Title:</label>
+    <form onSubmit={handleSubmit} className="row g-3">
+      <div className="col-md-6">
+        <label htmlFor="title" className="form-label">Titre</label>
         <input
           type="text"
           name="title"
@@ -39,39 +53,45 @@ const CoursesForm = () => {
           required
           value={formData.title}
           onChange={handleChange}
+          className="form-control"
         />
       </div>
-      <div>
-        <label htmlFor="description">Description:</label>
+      <div className="col-md-6">
+        <label htmlFor="description" className="form-label">Description</label>
         <input
           type="text"
           name="description"
           id="description"
           value={formData.description}
           onChange={handleChange}
+          className="form-control"
         />
       </div>
-      <div>
-        <label htmlFor="image">Image:</label>
+      <div className="col-6">
+        <label htmlFor="image" className="form-label">Image:</label>
         <input
-          type="text"
+          type="file"
           name="image"
           id="image"
-          value={formData.image}
           onChange={handleChange}
+          className="form-control"
         />
       </div>
-      <div>
-        <label htmlFor="pgnText">Fichier Pgn:</label>
+      <div className="col-12">
+        <label htmlFor="pgnText" className="form-label">Fichier Pgn</label>
         <textarea
           name="pgnText"
           id="pgnText"
           value={formData.pgnText}
           onChange={handleChange}
+          className="form-control"
         ></textarea>
       </div>
-      <button type="submit">Submit</button>
+      <div className="col-12">
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </div>
     </form>
+
   );
 };
 

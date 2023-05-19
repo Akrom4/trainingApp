@@ -2,12 +2,13 @@
 
 {% block title %}Hello UserController!{% endblock %}
 {% block stylesheets %}
+    {{ parent() }}
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 <div class="container" >
-    <table class="stripe" id="userTable">
+    <table class="table" id="userTable">
         <thead>
             <th>Id</th>
             <th>Username</th>
@@ -40,7 +41,6 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {

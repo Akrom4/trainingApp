@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Courses;
 use App\Form\CoursesType;
 use App\Repository\CoursesRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
 
 #[Route('/courses')]
 class CoursesController extends AbstractController
@@ -21,10 +26,10 @@ class CoursesController extends AbstractController
             'courses' => $coursesRepository->findAll(),
         ]);
     }
-    
+
     #[Route('/{id}/edit', name: 'app_courses_edit', methods: ['GET', 'POST'])]
     #[Route('/new', name: 'app_courses_new', methods: ['GET', 'POST'])]
-    public function new (Request $request, Courses $course = null, CoursesRepository $coursesRepository, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, Courses $course = null, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         if (!$course) {
             $course = new Courses();
@@ -32,22 +37,23 @@ class CoursesController extends AbstractController
         } else {
             $course->setUpdatedAt(new \DateTime());
         }
+
         $form = $this->createForm(CoursesType::class, $course);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->persist($course);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_courses_index', [], Response::HTTP_SEE_OTHER);
+    
+            return $this->redirectToRoute('app_courses_index');
         }
-
+    
         return $this->renderForm('courses/new.html.twig', [
             'course' => $course,
             'form' => $form,
         ]);
     }
+
 
 
     #[Route('/{id}', name: 'app_courses_show', methods: ['GET'])]

@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block body %}
-<h1>User index</h1>
+<h1 class="text-center">Utilisateurs</h1>
 <div class="container" >
-    <table class="stripe" id="userTable">
+    <table class="table table-striped" id="userTable">
         <thead>
             <th>Id</th>
             <th>Username</th>
@@ -43,7 +43,6 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {

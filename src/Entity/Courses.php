@@ -2,25 +2,33 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
+use Vich\UploaderBundle\Entity\File;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CoursesRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
 
 #[ApiResource(types: [], operations: [
     new Get(),
-    new Post(security: "is_granted('ROLE_ADMIN')"),
     new Put(security: "is_granted('ROLE_ADMIN')"),
+    new Post(
+        security: "is_granted('ROLE_ADMIN')",
+    ),
 ])]
+
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'description' => 'partial'])]
 
 class Courses
@@ -28,7 +36,7 @@ class Courses
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
