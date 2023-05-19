@@ -6,7 +6,16 @@ L'utilisateur pourra apprendre et réviser les ouvertures de son choix ainsi que
 
 # Stack Technique
 
-
+React 
+Symfony
+MySQL
+Twig
+API Platform
+Figma
+Notion.so
+Git
+Github
+Trello
 
 # Maquettes
 
