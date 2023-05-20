@@ -11,8 +11,16 @@ const CoursesForm = () => {
   });
 
   const handleChange = (e) => {
-    if (e.target.name === 'image') { // Special handling for file input
-      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    if (e.target.name === 'image') {
+      // Special handling for file input
+      // Convert file to base64 string
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        // reader.result contains the base64 string
+        setFormData({ ...formData, [e.target.name]: reader.result });
+      };
+      reader.readAsDataURL(file);
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -25,22 +33,25 @@ const CoursesForm = () => {
     const parsedJson = pgn.parseData();
     const createdAt = new Date().toISOString();
 
-    // Send the data to Symfony backend
-    const data = new FormData(); // Use FormData for file uploads
-    data.append('title', formData.title);
-    data.append('description', formData.description);
-    data.append('image', formData.image);
-    data.append('pgnText', formData.pgnText);
-    data.append('pgndata', parsedJson);
-    data.append('createdat', createdAt);
+    // Prepare the data as a regular JavaScript object
+    const data = {
+      title: formData.title,
+      description: formData.description,
+      image: formData.image,  // This is now a base64 string
+      pgnText: formData.pgnText,
+      pgndata: parsedJson,
+      createdat: createdAt
+    };
 
     console.log(data);
-    await axios.post('/api/courses', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data' // Required header for file uploads
-      }
+    
+    // Convert to JSON and send with axios
+    await axios.post('/api/courses', JSON.stringify(data), {
+        headers: {
+            'Content-Type': 'application/json',
+        }
     });
-  };
+};
 
   return (
     <form onSubmit={handleSubmit} className="row g-3">
