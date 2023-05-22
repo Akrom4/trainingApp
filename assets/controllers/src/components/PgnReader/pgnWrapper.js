@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Pgn } from '../../models';
 import axios from 'axios';
+
+
 
 const CoursesForm = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,25 @@ const CoursesForm = () => {
     image: null, // Set initial state to null
     pgnText: '',
   });
+  const [course, setCourse] = useState(null);
+  useEffect(() => {
+    const courseId = document.getElementById('pgn-wrapper').dataset.courseId;
+    if (courseId) {
+      fetch('/api/courses/' + courseId)
+        .then(response => response.json())
+        .then(data => {
+          setCourse(data);
+          setFormData({
+            title: data.title,
+            description: data.description,
+            image: data.image,
+            pgnText: data.pgndata, // You might want to set this value based on data if it exists
+          });
+        });
+    }
+  }, []);
+
+
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -22,6 +43,7 @@ const CoursesForm = () => {
       };
       reader.readAsDataURL(file);
     } else {
+      // Special handling for the app pgnData
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
@@ -44,14 +66,24 @@ const CoursesForm = () => {
     };
 
     console.log(data);
-    
+
     // Convert to JSON and send with axios
-    await axios.post('/api/courses', JSON.stringify(data), {
+    if (course) {
+      // Update existing course
+      await axios.put('/api/courses/' + course.id, JSON.stringify(data), {
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         }
-    });
-};
+      });
+    } else {
+      // Create new course
+      await axios.post('/api/courses', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="row g-3">
@@ -99,7 +131,7 @@ const CoursesForm = () => {
         ></textarea>
       </div>
       <div className="col-12">
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Ajouter</button>
       </div>
     </form>
 

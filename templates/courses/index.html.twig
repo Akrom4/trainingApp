@@ -1,60 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Courses index
-{% endblock %}
+{% block title %}Courses index{% endblock %}
+
 {% block stylesheets %}
-	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<table class="table table-striped" id="userTable">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Title</th>
-					<th>Description</th>
-					<th>Image</th>
-					<th>Pgndata</th>
-					<th>Creation</th>
-					<th>Update</th>
-					{% if is_granted('ROLE_ADMIN') %}
-						<th>Update</th>
-						<th>Delete</th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				{% if courses is defined %}
-					{% for course in courses %}
-						<tr>
-							<td>{{course.id}}</td>	
-							<td>
-								<a href="{{ path('app_courses_show',{'id' : course.id}) }}">{{course.title}}</a>
+    <div class="container">
+        <div class="my-4">
+            <h2 class="text-center">Cours</h2>
+            <a href="{{ path('app_courses_new') }}" class="btn btn-primary float-end m-1">Ajouter</a>
+        </div>
+        <table class="table table-striped table-bordered table-responsive" id="userTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Pgndata</th>
+                    <th>Creation</th>
+                    <th>Update</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>Editer</th>
+                        <th>Delete</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if courses is defined %}
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.id }}</td>
+                            <td><a href="{{ path('app_courses_show', { 'id': course.id }) }}">{{ course.title }}</a></td>
+                            <td>{{ course.description }}</td>
+                            <td>
+									{{ course.image | slice(0, 20) ~ '...' }}
 							</td>
-							<td>{{course.description}}</td>
-							<td>{{ course.image }}</td>
-							<td>{{ course.pgndata ? course.pgndata|json_encode : '' }}</td>
-							<td>{{ course.createdat ? course.createdat|date('Y-m-d H:i') : '' }}</td>
-							<td>{{ course.updatedat ? course.updatedat|date('Y-m-d H:i') : '' }}</td>
-							{% if is_granted('ROLE_ADMIN') %}
-								<td>
-									<a href="{{ path('app_courses_edit',{'id' : course.id}) }}" class="btn btn-success">Modifier</a>
-								</td>
-								<td>{{ include('courses/_delete_form.html.twig') }}
-								</td>
-							{% endif %}
-						</tr>
-					{% endfor %}
-				{% endif %}
-			</tbody>
-		</table>
+							<td>
+									{{ course.pgndata ? course.pgndata|json_encode|slice(0, 20) ~ '...' }}
+							</td>
+                            <td>{{ course.createdAt ? course.createdAt|date('Y-m-d H:i') : '' }}</td>
+                            <td>{{ course.updatedat ? course.updatedat|date('Y-m-d H:i') : '' }}</td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <td><a href="{{ path('app_courses_edit', { 'id': course.id }) }}" class="btn btn-primary">Editer</a></td>
+                                <td>{{ include('courses/_delete_form.html.twig', { 'id': course.id }) }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
-<a href="{{ path('app_courses_new') }}">Create new</a>{% endblock %}{% block javascripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script>
-	$(document).ready(function () {
-$('#userTable').DataTable();
-});
-</script>{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#userTable').DataTable();
+        });
+    </script>
+{% endblock %}
