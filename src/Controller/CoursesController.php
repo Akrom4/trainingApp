@@ -29,55 +29,36 @@ class CoursesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_courses_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Courses $course = null, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    {
+        $course->setUpdatedAt(new \DateTime());
+        $form = $this->createForm(CoursesType::class, $course);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($course);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_courses_index');
+        }
+
+        return $this->renderForm('courses/edit.html.twig', [
+            'course' => $course,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/new', name: 'app_courses_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Courses $course = null, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
-        if (!$course) {
-            $course = new Courses();
-            $course->setCreatedAt(new \DateTimeImmutable());
-        } else {
-            $course->setUpdatedAt(new \DateTime());
-        }
-
-        $form = $this->createForm(CoursesType::class, $course);
+        
+        $course = new Courses();
+        $course->setCreatedAt(new \DateTimeImmutable());
+     
+        $form = $this->createForm(CoursesType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            /* $imageData = $form->get('image')->getData();
-
-        if ($imageData) {
-            // Remove the 'data:image/png;base64,' part
-            $imageData = str_replace('^data:image/\w+;base64,', '', $imageData);
-            // Decode the base64 data
-            $imageData = base64_decode($imageData);
-            
-            // Create a tmp file in the system's temporary directory
-            $tmpFilePath = sys_get_temp_dir().'/'.uniqid();
-            file_put_contents($tmpFilePath, $imageData);
-
-            // Create a File instance for VichUploader
-            $imageFile = new \Symfony\Component\HttpFoundation\File\File($tmpFilePath);
-
-            $course->setImage($imageFile); 
-        } */
-        $base64_image = $form->get('image')->getData();
-
-    if ($base64_image) {
-        list($type, $base64_image) = explode(';', $base64_image);
-        list(, $base64_image) = explode(',', $base64_image);
-        $base64_image = base64_decode($base64_image);
-
-        $imageName = uniqid() . '.png';  // Choose your own filename and extension if necessary
-        $imagePath = $this->getParameter('kernel.project_dir') . '/public/images/courses/' . $imageName;
-
-
-        file_put_contents($imagePath, $base64_image);
-        $course->setImage('images/courses/' . $imageName);
-    }
             $entityManager->persist($course);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_courses_index');
         }
 
