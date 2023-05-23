@@ -9,8 +9,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('pgnWrapper') }}
 {% endblock %}
-{{ include('courses/_delete_form.html.twig') }}
+    {{ include('courses/_delete_form.html.twig') }}
     <a href="{{ path('app_courses_index') }}">retour à la liste</a>
-
-    
 {% endblock %}

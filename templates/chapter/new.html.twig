@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Chapter{% endblock %}
+{% block title %}Ajouter les chapitres{% endblock %}
 
 {% block body %}
-    <h1>Create new Chapter</h1>
+    <h1 class="text-center mt-3 mb-3">Ajouter des chapitres</h1>
 
-    {{ include('chapter/_form.html.twig') }}
-
-    <a href="{{ path('app_chapter_index') }}">back to list</a>
+    <div id="pgn-wrapper"></div>
+{% block javascripts %}
+    {{ encore_entry_script_tags('pgnWrapper') }}
+{% endblock %}
+    <a href="{{ path('app_chapter_index') }}">retour à la liste</a>
 {% endblock %}

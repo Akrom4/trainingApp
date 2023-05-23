@@ -2,8 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\ChapterRepository;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ChapterRepository;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+
+
+#[ApiResource(types: [], operations: [
+    new Get(),
+    new Put(security: "is_granted('ROLE_ADMIN')"),
+    new Post(
+        security: "is_granted('ROLE_ADMIN')",
+    ),
+])]
+
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'title' => 'partial'])]
 
 #[ORM\Entity(repositoryClass: ChapterRepository::class)]
 class Chapter
@@ -21,6 +39,9 @@ class Chapter
 
     #[ORM\Column(nullable: true)]
     private array $pgndata = [];
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $rawpgn = null;
 
     public function getId(): ?int
     {
@@ -59,6 +80,18 @@ class Chapter
     public function setPgndata(?array $pgndata): self
     {
         $this->pgndata = $pgndata;
+
+        return $this;
+    }
+
+    public function getRawpgn(): ?string
+    {
+        return $this->rawpgn;
+    }
+
+    public function setRawpgn(?string $rawpgn): self
+    {
+        $this->rawpgn = $rawpgn;
 
         return $this;
     }

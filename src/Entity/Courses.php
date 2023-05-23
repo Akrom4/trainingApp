@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\ApiFilter;
 use Vich\UploaderBundle\Entity\File;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CoursesRepository;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,15 +22,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
 
-#[ApiResource(types: [], operations: [
+#[ApiResource( operations: [
     new Get(),
     new Put(security: "is_granted('ROLE_ADMIN')"),
     new Post(
         security: "is_granted('ROLE_ADMIN')",
     ),
 ])]
+#[GetCollection]
 
-#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'description' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'title' => 'partial', 'description' => 'partial'])]
 
 class Courses
 {
@@ -47,9 +49,6 @@ class Courses
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
-
-    #[ORM\Column(nullable: true)]
-    private array $pgndata = [];
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdat = null;
@@ -102,18 +101,6 @@ class Courses
     public function setImage(?string $image): self
     {
         $this->image = $image;
-
-        return $this;
-    }
-
-    public function getPgndata(): array
-    {
-        return $this->pgndata;
-    }
-
-    public function setPgndata(?array $pgndata): self
-    {
-        $this->pgndata = $pgndata;
 
         return $this;
     }

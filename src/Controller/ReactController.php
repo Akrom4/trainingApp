@@ -17,11 +17,24 @@ class ReactController extends AbstractController
         ]);
     }
 
-    #[Route('/react/{id}', name: 'app_react_course', methods: ['GET', 'POST'])]
-    public function courseChapter(int $id, CoursesRepository $coursesRepository): Response
+    #[Route('/react/{courseId}/{chapterId}', name: 'app_react_course', methods: ['GET', 'POST'])]
+    public function courseChapter(int $courseId, int $chapterId, CoursesRepository $coursesRepository): Response
     {
-        $course = $coursesRepository->find($id);
-        $pgnData = $course->getPgndata();
+        // Fetch the course
+        $course = $coursesRepository->find($courseId);
+        if (!$course) {
+            throw $this->createNotFoundException('The course does not exist');
+        }
+
+        // Fetch the chapters of the course
+        $chapters = $course->getChapters();
+        if (!$chapters || !isset($chapters[$chapterId])) {
+            throw $this->createNotFoundException('The chapter does not exist');
+        }
+
+        // Fetch the chapter
+        $chapter = $chapters[$chapterId];
+        $pgnData = $chapter->getPgndata();
 
         return $this->render('react/index.html.twig', [
             'chapter' => $pgnData,
