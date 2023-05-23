@@ -30,7 +30,7 @@ class ReactController extends AbstractController
             throw $this->createNotFoundException('The course does not exist');
         }
         // Fetch the chapter
-        $chapter = $chapterRepository->find($chapterId); 
+        $chapter = $chapterRepository->find($chapterId);
      
         if (!$chapter) {
             throw $this->createNotFoundException('The chapter does not exist');
