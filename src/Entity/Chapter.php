@@ -69,6 +69,10 @@ class Chapter
     {
         $this->course = $course;
 
+        if ($course) {
+            $course->addChapter($this);
+        }
+
         return $this;
     }
 
