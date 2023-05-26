@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\File\File;
         security: "is_granted('ROLE_ADMIN')",
     ),
 ])]
+#[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'title' => 'partial', 'description' => 'partial'])]
 
 class Courses
