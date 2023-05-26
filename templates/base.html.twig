@@ -18,12 +18,18 @@
 		<div class="main-wrapper">
 			<div id="sidebar" class="sidebar">
 				<div id="logoDiv">
-					<img id="logo" src="{{ asset('images/logo/logo.png') }}" alt="Logo">
+					<a href="{{ path('app_homepage') }}">
+						<img id="logo" src="{{ asset('images/logo/logo.png') }}" alt="Logo">
+					</a>
 				</div>
 				<span alt="Mes cours" class="icon  google-font filled">
 					<a href="{{ path('app_user_index') }}">school</a>
 				</span>
-
+				{% if is_granted('ROLE_ADMIN') %}
+				<span alt="Mes cours" class="icon  google-font filled">
+					<a href="{{ path('app_user_index') }}">construction</a>
+				</span>
+				{% endif %}
 
 			</div>
 			<div class="mainContainer">
@@ -31,11 +37,6 @@
 				{% endblock %}
 			</div>
 		</div>
-		{% block footer %}
-			<footer class="text-center">
-				&copy; 2023 Echecs Plus
-			</footer>
-		{% endblock %}
 	</body>
 </html>
 {% block javascripts %}
