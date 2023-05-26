@@ -5,10 +5,7 @@
 {% block body %}
     <h1 class="text-center mt-3 mb-3">Édition de cours</h1>
 
-    <div id="pgn-wrapper" data-course-id="{{ course.id }}"></div>
-{% block javascripts %}
-    {{ encore_entry_script_tags('pgnWrapper') }}
-{% endblock %}
+
     {{ include('courses/_delete_form.html.twig') }}
     <a href="{{ path('app_courses_index') }}">retour à la liste</a>
 {% endblock %}

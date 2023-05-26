@@ -9,28 +9,26 @@ use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
-use Vich\UploaderBundle\Entity\File;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CoursesRepository;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
-
 #[ApiResource( operations: [
     new Get(),
-    new Put(security: "is_granted('ROLE_ADMIN')"),
+    new Put(
+        security: "is_granted('ROLE_ADMIN')"),
     new Post(
         security: "is_granted('ROLE_ADMIN')",
     ),
 ])]
-#[GetCollection]
-
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'title' => 'partial', 'description' => 'partial'])]
 
 class Courses
@@ -59,11 +57,29 @@ class Courses
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Chapter::class)]
     private Collection $chapters;
 
+    #[Vich\UploadableField(mapping: "course_images", fileNameProperty: "image")]
+    private ?File $imageFile = null;
+
+
+
     public function __construct()
     {
         $this->chapters = new ArrayCollection();
     }
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
 
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            $this->updatedat = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;

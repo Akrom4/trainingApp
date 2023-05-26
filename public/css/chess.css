@@ -78,8 +78,29 @@ body {
 }
 
 
+/* Cards style */
+.my-card-container{
 
-/* End Base style */
+}
+.my-card {
+    background-color: #FBFCFF;
+    color : #183B65;
+    border-radius: 1vmin;
+    overflow: hidden;
+    height : 25vmin;
+}
+
+.my-card-body {
+    
+}
+
+.my-card-title {
+    
+}
+
+.my-card-text {
+    
+}
 
 /* React components */
 

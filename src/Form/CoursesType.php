@@ -16,32 +16,24 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 class CoursesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('title', TextType::class, [
-                'label' => 'title',
-                'required' => true,
-            ])
-            ->add('description', TextType::class, [
-                'label' => 'description',
-                'required' => false,
-            ])
-            ->add('image', FileType::class, [
-                'label' => 'image',
-                'required' => false,
-                'mapped' => false,
-            ])
-            ->add('pgnText', TextareaType::class, [
-                'label' => 'Fichier Pgn',
-                'required' => false,
-                'mapped' => false,
-                'data' => '',
-                'attr' => [
-                    'id' => 'pgnText',
-                ],
-            ])
-        ;
-    }
+{
+    $builder
+        ->add('title', TextType::class, [
+            'label' => 'title',
+            'required' => true,
+        ])
+        ->add('description', TextareaType::class, [
+            'label' => 'description',
+            'required' => false,
+        ])
+        ->add('imageFile', VichFileType::class, [
+            'label' => 'image',
+            'required' => false,
+            'allow_delete' => true,
+            'download_uri' => false,
+        ])
+    ;
+}
 
     public function configureOptions(OptionsResolver $resolver): void
     {

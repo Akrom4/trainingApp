@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-
-
 #[Route('/courses')]
 class CoursesController extends AbstractController
 {
@@ -47,13 +45,12 @@ class CoursesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_courses_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Courses $course = null, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        
         $course = new Courses();
         $course->setCreatedAt(new \DateTimeImmutable());
-     
-        $form = $this->createForm(CoursesType::class);
+
+        $form = $this->createForm(CoursesType::class, $course);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,9 +74,13 @@ class CoursesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_courses_delete', methods: ['POST'])]
-    public function delete(Request $request, Courses $course, CoursesRepository $coursesRepository): Response
+    public function delete(Request $request, Courses $course, CoursesRepository $coursesRepository,EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $course->getId(), $request->request->get('_token'))) {
+            foreach ($course->getChapters() as $chapter) {
+                $chapter->setCourse(null);
+                $entityManager->persist($chapter);
+            }
             $coursesRepository->remove($course, true);
         }
 

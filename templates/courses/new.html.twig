@@ -1,14 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un cours{% endblock %}
+{% block title %}Create New Course{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mt-3 mb-3">Ajouter un cours</h1>
-
-    <div id="pgn-wrapper"></div>
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('pgnWrapper') }}
+    <div class="container">
+        <h1 class="text-center">Créer un cours</h1>
+        {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.title, 'Titre') }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.description, 'Description') }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.imageFile, 'Image') }}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control-file'}}) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Créer</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
-    <a href="{{ path('app_courses_index') }}">retour à la liste</a>
-{% endblock %}
+        
