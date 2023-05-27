@@ -88,12 +88,13 @@ body {
 .my-card-grid {
     display: grid;
     grid-template-columns: 30% 1fr 15%;
-    grid-template-rows: repeat(2, 40%) 1fr 15%;
+    grid-template-rows: repeat(2, 30%) 1fr 20%;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    height:25vh;
+    height:30vh;
     border-radius: 2vmin;
-    background-color:#FBFCFF; 
+    background-color:#FBFCFF;
+    color:#214a7c;
 }
 
 .my-card-image {
@@ -116,7 +117,6 @@ body {
 .my-card-title {
     grid-area: 1 / 2 / 2 / 3;
     font-size:32px;
-    color:#214a7c;
     font-weight: bold;
 }
 
@@ -124,24 +124,38 @@ body {
     grid-area: 2 / 2 / 3 / 3;
 }
 
-.my-card- {
+.div4 {
     grid-area: 1 / 3 / 2 / 4;
 }
 
-.div5 {
+.my-card-button {
     grid-area: 2 / 3 / 3 / 4;
+}
+
+.my-card-button button{
+        color: #D0CCD0;
+        border-color: #183B65;
+        background-color: #183B65;
+}
+.my-card-button button:hover{
+        color: #183B65;
+        background-color: #D0CCD0;
+        border-color: #D0CCD0;
 }
 
 .div6 {
     grid-area: 3 / 1 / 4 / 2;
+    padding-left: 1vmin
 }
 
 .div7 {
     grid-area: 3 / 3 / 4 / 4;
+
 }
 
 .div8 {
     grid-area: 4 / 1 / 5 / 4;
+    padding-left: 1vmin
 }
 
 .div9 {
