@@ -3,9 +3,27 @@
 {% block title %}Edit Courses{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1 class="text-center mt-3 mb-3">Édition de cours</h1>
-
-
+    {{ form_start(form) }}
+    <div class="mb-3">
+        {{ form_label(form.title, 'Titre') }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.description, 'Description') }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.imageFile, 'Image') }}
+        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control-file'}}) }}
+        {% if course.image %}
+            <img src="{{ vich_uploader_asset(course, 'imageFile') }}" alt="Current image" class="img-thumbnail mt-2">
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Créer</button>
+    {{ form_end(form) }}
     {{ include('courses/_delete_form.html.twig') }}
     <a href="{{ path('app_courses_index') }}">retour à la liste</a>
+</div>
 {% endblock %}
