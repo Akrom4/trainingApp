@@ -61,11 +61,15 @@ class Courses
     #[Vich\UploadableField(mapping: "course_images", fileNameProperty: "image")]
     private ?File $imageFile = null;
 
+    #[ORM\OneToMany(mappedBy: 'courseid', targetEntity: UserCourses::class, orphanRemoval: true)]
+    private Collection $userCourses;
+
 
 
     public function __construct()
     {
         $this->chapters = new ArrayCollection();
+        $this->userCourses = new ArrayCollection();
     }
     public function getImageFile(): ?File
     {
@@ -170,6 +174,36 @@ class Courses
             // set the owning side to null (unless already changed)
             if ($chapter->getCourse() === $this) {
                 $chapter->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCourses>
+     */
+    public function getUserCourses(): Collection
+    {
+        return $this->userCourses;
+    }
+
+    public function addUserCourse(UserCourses $userCourse): self
+    {
+        if (!$this->userCourses->contains($userCourse)) {
+            $this->userCourses->add($userCourse);
+            $userCourse->setCourseid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCourse(UserCourses $userCourse): self
+    {
+        if ($this->userCourses->removeElement($userCourse)) {
+            // set the owning side to null (unless already changed)
+            if ($userCourse->getCourseid() === $this) {
+                $userCourse->setCourseid(null);
             }
         }
 

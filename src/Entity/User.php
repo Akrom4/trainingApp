@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -36,6 +38,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'userid', targetEntity: UserCourses::class, orphanRemoval: true)]
+    private Collection $userCourses;
+
+    public function __construct()
+    {
+        $this->userCourses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,5 +137,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(){
 
+    }
+
+    /**
+     * @return Collection<int, UserCourses>
+     */
+    public function getUserCourses(): Collection
+    {
+        return $this->userCourses;
+    }
+
+    public function addUserCourse(UserCourses $userCourse): self
+    {
+        if (!$this->userCourses->contains($userCourse)) {
+            $this->userCourses->add($userCourse);
+            $userCourse->setUserid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCourse(UserCourses $userCourse): self
+    {
+        if ($this->userCourses->removeElement($userCourse)) {
+            // set the owning side to null (unless already changed)
+            if ($userCourse->getUserid() === $this) {
+                $userCourse->setUserid(null);
+            }
+        }
+
+        return $this;
     }
 }
