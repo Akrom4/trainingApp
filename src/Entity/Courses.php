@@ -64,6 +64,12 @@ class Courses
     #[ORM\OneToMany(mappedBy: 'courseid', targetEntity: UserCourses::class, orphanRemoval: true)]
     private Collection $userCourses;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $author = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $colorside = null;
+
 
 
     public function __construct()
@@ -206,6 +212,30 @@ class Courses
                 $userCourse->setCourseid(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getColorside(): ?string
+    {
+        return $this->colorside;
+    }
+
+    public function setColorside(?string $colorside): self
+    {
+        $this->colorside = $colorside;
 
         return $this;
     }

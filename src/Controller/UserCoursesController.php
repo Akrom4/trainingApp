@@ -15,10 +15,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserCoursesController extends AbstractController
 {
     #[Route('/usercourses', name: 'app_user_courses')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('You must be logged in to view your courses');
+        }
+
+        $userCourses = $entityManager->getRepository(UserCourses::class)->findBy(['userid' => $user]);
+
+        $courses = [];
+        foreach ($userCourses as $userCourse) {
+            $courses[] = $userCourse->getCourseid();
+        }
+
         return $this->render('user_courses/index.html.twig', [
-            'controller_name' => 'UserCoursesController',
+            'courses' => $courses,
         ]);
     }
 
@@ -34,6 +46,15 @@ class UserCoursesController extends AbstractController
             throw $this->createNotFoundException('The course does not exist');
         }
 
+        // Check if the user is already following the course
+        $userCourse = $entityManager->getRepository(UserCourses::class)->findOneBy([
+            'userid' => $user,
+            'courseid' => $course,
+        ]);
+        if ($userCourse) {
+            // The user is already following the course, return a response or ignore the request
+            return new Response('You are already following this course');
+        }
         $userCourses = new UserCourses();
         $userCourses->setUserid($user);
         $userCourses->setCourseid($course);
@@ -41,6 +62,6 @@ class UserCoursesController extends AbstractController
         $entityManager->persist($userCourses);
         $entityManager->flush();
 
-        return $this->redirectToRoute('courses_index');
+        return $this->redirectToRoute('app_courses_list');
     }
 }

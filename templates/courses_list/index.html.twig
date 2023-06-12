@@ -1,32 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des cours
-{% endblock %}
-
-
+{% block title %}Liste des cours{% endblock %}
 
 {% block body %}
-	<div class="container mt-3">
-		<h1 class="text-center mb-3">Liste des cours</h1>
-		<div class="row">
-			{% for course in courses %}
-				<div class="my-card-container shadow-sm m-3">
-					<div class="my-card-image" style="background-image: url({{vich_uploader_asset(course, 'imageFile')}})"></div>
-					<div class="my-card-content m-2">
-						<div class="my-card-title">{{ course.title }}</div>
-						<p class="my-card-moves">1. e4 e5 2. Cf3 Cc6 3. Fc4 !</p>
-						<div class="my-card-button">
-							<button class="btn btn-outline-secondary" data-course-id="{{ course.id }}">Ajouter</button>
-						</div>
-					<div class="my-card-separator"></div>
-					<div class="my-card-meta">
-						<div class="my-card-team">Pour les blancs</div>
-						<div class="my-card-author">Par Fafa</div>
-					</div>
-					<div class="my-card-description">{{ course.description }}</div>
-				</div>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
+    <div class="container mt-3">
+        <h1 class="text-center mb-3">Liste des cours</h1>
+        <div class="row">
+            {% for course in courses %}
+                <div class="my-card-container shadow-sm m-3">
+                    <div class="my-card-image" style="background-image: url({{vich_uploader_asset(course, 'imageFile')}})"></div>
+                    <div class="my-card-content m-2">
+                        <div class="my-card-title">{{ course.title }}</div>
+                        <p class="my-card-moves">1. e4 e5 2. Cf3 Cc6 3. Fc4 !</p>
+                        <div class="my-card-button">
+                            {% if course in followedCourses %}
+                                <button class="btn btn-success" disabled>Suivi</button>
+                            {% else %}
+                                <form method="post" action="{{ path('app_follow_courses', {'courseId': course.id}) }}">
+                                    <button type="submit" class="btn btn-outline-secondary">Ajouter</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <div class="my-card-separator"></div>
+                        <div class="my-card-meta">
+                            <div class="my-card-team">Pour les {{ course.colorside == 'W' ? 'Blancs' : 'Noirs' }}</div>
+                            <div class="my-card-author">Par {{ course.author }}</div>
+                        </div>
+                        <div class="my-card-description">{{ course.description }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
+
