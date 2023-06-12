@@ -64,4 +64,30 @@ class UserCoursesController extends AbstractController
 
         return $this->redirectToRoute('app_courses_list');
     }
+
+    #[Route('/usercourses/{courseId}/remove', name: 'app_unfollow_courses')]
+    public function remove(int $courseId, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('You must be logged in to unfollow a course');
+        }
+        $course = $entityManager->getRepository(Courses::class)->find($courseId);
+        if (!$course) {
+            throw $this->createNotFoundException('The course does not exist');
+        }
+
+        $userCourse = $entityManager->getRepository(UserCourses::class)->findOneBy([
+            'userid' => $user,
+            'courseid' => $course,
+        ]);
+        if (!$userCourse) {
+            throw $this->createNotFoundException('You are not following this course');
+        }
+
+        $entityManager->remove($userCourse);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_courses');
+    }
 }
