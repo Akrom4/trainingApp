@@ -13,7 +13,7 @@
                         <div class="my-card-title">{{ course.title }}</div>
                         <p class="my-card-moves">1. e4 e5 2. Cf3 Cc6 3. Fc4 !</p>
                         <div class="my-card-button">
-                            <a href="{{ path('app_courses_index', {'id': course.id}) }}" class="btn btn-outline-secondary">C'est parti</a>
+                            <a href="{{ path('app_courses_chapters', {'id': course.id}) }}" class="btn btn-outline-secondary">Apprendre</a>
                         </div>
                         <div class="my-card-separator"></div>
                         <div class="my-card-meta">
@@ -23,8 +23,8 @@
                         <div class="my-card-description">{{ course.description }}</div>
                     </div>
                     <form method="post" action="{{ path('app_unfollow_courses', {'courseId': course.id}) }}">
-                                <button type="submit" class="btn btn-danger">-</button>
-                            </form>
+                        <button type="submit" class="btn btn-danger">-</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chapters{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h1 class="text-center mb-3">Chapters</h1>
+        <div class="row">
+            {% for chapter in chapters %}
+                <div class="my-card-container shadow-sm m-3">
+                    <div class="my-card-content m-2">
+                        <div class="my-card-title">{{ chapter.chapter[0].Title }}</div>
+                        <div class="my-card-moves">{{ chapter.chapter[0].MovesString }}</div>
+
+                        <div class="my-card-button">
+                            {# <a href="{{ path('app_chapter_detail', {'chapterId': chapter.id}) }}" class="btn btn-outline-secondary">Learn More</a> #}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

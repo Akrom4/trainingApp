@@ -149,6 +149,17 @@ body {
     border-color: #D0CCD0;
 }
 
+.my-card-button a{
+    color: #D0CCD0;
+    border-color: #183B65;
+    background-color: #183B65;
+}
+.my-card-button a:hover{
+    color: #183B65;
+    background-color: #D0CCD0;
+    border-color: #D0CCD0;
+}
+
 .my-card-meta {
     display: flex;
     justify-content: space-between;

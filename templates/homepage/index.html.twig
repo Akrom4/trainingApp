@@ -3,6 +3,11 @@
 {% block title %}Echecs Plus{% endblock %}
 
 {% block body %}
-
-
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <script type="text/javascript">
+            window.location.href = "{{ path('app_user_courses') }}";
+        </script>
+    {% else %}
+        window.location.href = "{{ path('app_login') }}";
+    {% endif %}
 {% endblock %}
