@@ -2,11 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\UserCoursesRepository;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\UserCoursesRepository;
+
 
 #[ORM\Entity(repositoryClass: UserCoursesRepository::class)]
+#[ApiResource( operations: [
+    new Get(
+        security: "is_granted('ROLE_ADMIN')"),
+    new Put(
+        security: "is_granted('ROLE_ADMIN')"),
+    new Post(
+        security: "is_granted('ROLE_ADMIN')",
+    ),
+])]
 class UserCourses
 {
     #[ORM\Id]

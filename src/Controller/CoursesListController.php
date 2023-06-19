@@ -55,6 +55,7 @@ class CoursesListController extends AbstractController
                 $moveNumber++;
             }
             $parsedChapter['chapter'][0]['MovesString'] = trim($movesString);
+            $parsedChapter['id'] = $chapter->getId(); // Add this line
             $parsedChapters[] = $parsedChapter;
         }
 
@@ -63,5 +64,4 @@ class CoursesListController extends AbstractController
             'chapters' => $parsedChapters,
         ]);
     }
-
 }
