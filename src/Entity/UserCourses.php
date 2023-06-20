@@ -30,11 +30,11 @@ class UserCourses
 
     #[ORM\ManyToOne(inversedBy: 'userCourses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $userid = null;
+    private ?User $userid = null;
 
     #[ORM\ManyToOne(inversedBy: 'userCourses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?courses $courseid = null;
+    private ?Courses $courseid = null;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private array $completedChapters = [];
@@ -53,24 +53,24 @@ class UserCourses
         return $this->id;
     }
 
-    public function getUserid(): ?user
+    public function getUserid(): ?User
     {
         return $this->userid;
     }
 
-    public function setUserid(?user $userid): self
+    public function setUserid(?User $userid): self
     {
         $this->userid = $userid;
 
         return $this;
     }
 
-    public function getCourseid(): ?courses
+    public function getCourseid(): ?Courses
     {
         return $this->courseid;
     }
 
-    public function setCourseid(?courses $courseid): self
+    public function setCourseid(?Courses $courseid): self
     {
         $this->courseid = $courseid;
 
