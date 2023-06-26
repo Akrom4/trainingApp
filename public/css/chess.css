@@ -48,7 +48,7 @@
         background: linear-gradient(to bottom, #183B65 0%, #285387 100%);
         padding: 1%;
         align-items: center;
-        height:100vh;
+        height: 100vh;
         top: 0;
         left: 0;
         width: 8vmin;
@@ -92,8 +92,8 @@
         display: flex;
         flex-direction: row;
         border-radius: 2vmin;
-        background-color:#FBFCFF;
-        color:#214a7c;
+        background-color: #FBFCFF;
+        color: #214a7c;
         min-height: 25vmin;
         max-width: 45%;
         padding: 1em;
@@ -105,7 +105,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
-        width: 30%; 
+        width: 30%;
         height: 100%;
     }
 
@@ -117,7 +117,7 @@
     }
 
     .my-card-title {
-        font-size:26px;
+        font-size: 26px;
         font-weight: bold;
         margin-top: 0.5em;
     }
@@ -127,8 +127,8 @@
     }
 
     .my-card-separator {
-        background-color: grey; 
-        height: 1px; 
+        background-color: grey;
+        height: 1px;
         width: 100%;
         margin: 0.5em 0;
     }
@@ -138,24 +138,25 @@
         text-align: right;
     }
 
-    .my-card-button button{
+    .my-card-button button {
         color: #D0CCD0;
         border-color: #183B65;
         background-color: #183B65;
     }
 
-    .my-card-button button:hover{
+    .my-card-button button:hover {
         color: #183B65;
         background-color: #D0CCD0;
         border-color: #D0CCD0;
     }
 
-    .my-card-button a{
+    .my-card-button a {
         color: #D0CCD0;
         border-color: #183B65;
         background-color: #183B65;
     }
-    .my-card-button a:hover{
+
+    .my-card-button a:hover {
         color: #183B65;
         background-color: #D0CCD0;
         border-color: #D0CCD0;
@@ -173,7 +174,7 @@
         margin-top: 0.5em;
     }
 
-    .btn-remove {   
+    .btn-remove {
         background-color: #dc3545;
         color: white;
         border: none;
@@ -196,14 +197,15 @@
 
         .my-card-image {
             width: 100%;
-            height:30%;
-            order: 1; 
+            height: 30%;
+            order: 1;
         }
 
         .my-card-content {
             width: 100%;
-            order: 2;  
-    }}
+            order: 2;
+        }
+    }
 
 
     /* React components */
@@ -300,7 +302,7 @@
 
 
 
-    @media screen and (max-width:800px) {
+    /* @media screen and (max-width:800px) {
         #app {
             display: block;
             width: 100%;
@@ -333,7 +335,7 @@
             height: 10vmin;
             width: 10vmin;
         }
-    }
+    } */
 
     #wrap #chessboard,
     #wrap #promotion {
@@ -348,9 +350,10 @@
         padding: 2vmin;
         margin: 2vmin;
         border-radius: 5vmin;
-        overflow: hidden;  /* Hides the overflow */
+        overflow: hidden;
+        /* Hides the overflow */
     }
-    
+
     #pgnBoxInner {
         font-family: "Roboto";
         display: flex;
@@ -358,22 +361,22 @@
         padding: 2vmin;
         height: 100%;
         overflow: auto;
-    
+
     }
-    
+
     .movesContainer {
         display: flex;
         flex-wrap: wrap;
     }
-    
+
     #pgnBoxInner::-webkit-scrollbar {
         width: 1vmin;
     }
-    
+
     #pgnBoxInner::-webkit-scrollbar-track {
         background: #FBFCFF;
     }
-    
+
     #pgnBoxInner::-webkit-scrollbar-thumb {
         background-color: #888;
         border-radius: 1vmin;
@@ -385,35 +388,62 @@
         padding-bottom: 1vmin;
         font-size: 1.3750em;
     }
+
     .moves:hover {
         text-decoration: underline;
         cursor: pointer;
     }
+
     .moveNumber {
         color: #214a7c;
         font-weight: bold;
         padding-bottom: 1vmin;
         font-size: 1.3750em;
     }
-    
+
     .comment {
         font-size: 1.2250em;
-        color: #313131;    
+        color: #313131;
         padding-right: 1vmin;
     }
-    
+
     .game-container {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-top: 2vmin;
     }
 
     .game-navigator {
+        width: 80vmin;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1em;
+    }
+
+    .game-navigator button {
+        margin-top: 2vmin;
+        font-size: 3vmin;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #214a7c;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
       }
+      
+      .circle svg {
+        color: #eee;
+      }
+
     #app {
         overscroll-behavior: contain;
         display: flex;
