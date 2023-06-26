@@ -341,15 +341,42 @@
     }
 
     #pgnBox {
-        border-radius: 5vmin;
         background-color: #FBFCFF;
         height: 73vmin;
         width: 50vmin;
         display: flex;
-        flex-direction: column;
-        padding: 2vmin 2vmin 2vmin 2vmin;
+        padding: 2vmin;
         margin: 2vmin;
+        border-radius: 5vmin;
+        overflow: hidden;  /* Hides the overflow */
+    }
+    
+    #pgnBoxInner {
         font-family: "Roboto";
+        display: flex;
+        flex-direction: column;
+        padding: 2vmin;
+        height: 100%;
+        overflow: auto;
+    
+    }
+    
+    .movesContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    #pgnBoxInner::-webkit-scrollbar {
+        width: 1vmin;
+    }
+    
+    #pgnBoxInner::-webkit-scrollbar-track {
+        background: #FBFCFF;
+    }
+    
+    #pgnBoxInner::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 1vmin;
     }
 
     .moves {
@@ -358,9 +385,21 @@
         padding-bottom: 1vmin;
         font-size: 1.3750em;
     }
-
-    .comments {
+    .moves:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .moveNumber {
+        color: #214a7c;
+        font-weight: bold;
+        padding-bottom: 1vmin;
+        font-size: 1.3750em;
+    }
+    
+    .comment {
         font-size: 1.2250em;
+        color: #888;    
+        padding-right: 1vmin;
     }
 
     #app {

@@ -1,28 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './pgnReader.css';
 import { Pgn } from "../../models";
 
-
-export default function PgnReader({ pgnData = null}) {
+export default function PgnReader({ pgnData = null, onMoveClick }) {
+  const [selectedMove, setSelectedMove] = useState(null);
   const chapters = pgnData && pgnData.chapter ? pgnData.chapter : [];
-    console.log(pgnData);
-    const renderMoves = (moves) => {
-        return moves.map((move, index) => (
-          <span key={index} className="moves" data-fen={move.position}>
-            {move.teamColor === 'w' && `${move.moveNumber}. `}
-            {move.move} &nbsp;
+  console.log(pgnData);
+
+  const handleMoveClick = (move) => {
+    onMoveClick(move);
+  };
+
+  const renderComments = (comments, moveNumber, color) => comments
+    .filter(comment => comment.moveNumber === moveNumber && comment.teamColor === color)
+    .map((comment, index) => (
+      <div key={index} className="comment">
+        {comment.text.replace(/\[%cal .*?\]/g, '')}
+      </div>
+    ));
+
+    const renderMoves = (moves, comments) => {
+      return moves.map((move, index) => (
+        <React.Fragment key={index}>
+          {move.teamColor === 'w' && <span className="moveNumber">{move.moveNumber}.</span>}
+          <span
+            className="moves"
+            data-fen={move.position}
+            onClick={() => handleMoveClick(move)}
+          >
+            {move.move}&nbsp;
           </span>
-        ));
-      };
+          
+         {renderComments(comments, move.moveNumber, move.teamColor)}
+        </React.Fragment>
+      ));
+    };
+    
+    
 
   return (
     <div id="pgnBox">
+      <div id="pgnBoxInner">
       {chapters.map((chapter, index) => (
         <div key={index}>
           <h3>{chapter.Title}</h3>
-          <div>{renderMoves(chapter.Moves)}</div>
+          <div className="movesContainer">{renderMoves(chapter.Moves, chapter.Comments)}</div>
         </div>
       ))}
+      </div>
+      
     </div>
   );
 }

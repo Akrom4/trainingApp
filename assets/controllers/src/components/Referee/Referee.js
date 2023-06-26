@@ -13,7 +13,7 @@ import blackBishop from '../../assets/images/chess_bb.svg';
 import blackQueen from '../../assets/images/chess_bq.svg';
 
 
-export default function Referee() {
+export default function Referee({fen}) {
   // const [board,setBoard] = useState(testBoard);
   const [board, setBoard] = useState(initialBoard);
   const [promotion, setPromotion] = useState(null);
@@ -26,6 +26,12 @@ export default function Referee() {
     updatePossibleMoves();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (fen) {
+      readFen(fen);  // Use the provided FEN to set the board's position
+    }
+  }, [fen]);  // Rerun this effect whenever `fen` changes
 
   function setOrientation(color) {
     setBoardOrientation(color);
