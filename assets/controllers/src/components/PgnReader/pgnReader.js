@@ -39,7 +39,6 @@ export default function PgnReader({ pgnData = null, onMoveClick }) {
       <div id="pgnBoxInner">
         {chapters.map((chapter, index) => (
           <div key={index}>
-            <h3>{chapter.Title}</h3>
             <div className="movesContainer">{renderMoves(chapter.Moves, chapter.Comments)}</div>
           </div>
         ))}

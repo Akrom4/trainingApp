@@ -18,6 +18,12 @@ function App() {
 
   useEffect(() => {
     if (gameState.length > 0) {
+      setFen(gameState[currentGameStateIndex].position); // Update the FEN state whenever the current game state changes
+    }
+  }, [gameState, currentGameStateIndex]);
+  
+  useEffect(() => {
+    if (gameState.length > 0) {
       setFen(gameState[0].position); // Initialize the FEN state with the first move's position
     }
   }, [gameState]);

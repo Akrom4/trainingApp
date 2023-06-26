@@ -16,7 +16,6 @@ export default function GameNavigator({ gameState, currentGameStateIndex, setCur
   const moveToNext = () => {
     setCurrentGameStateIndex(prev => prev < gameState.length - 1 ? prev + 1 : gameState.length - 1);
   };
-  console.log(gameState);
 
   return (
     <div className="game-navigator">
