@@ -20,8 +20,10 @@ export default function GameNavigator({ gameState, currentGameStateIndex, setCur
   return (
     <div className="game-navigator">
       <button onClick={moveToStart}>Start</button>
-      <button onClick={moveToPrev}>Prev</button>
-      <button onClick={moveToNext}>Next</button>
+      <div>
+        <button onClick={moveToPrev}>Prev</button>
+        <button onClick={moveToNext}>Next</button>
+      </div>
       <button onClick={moveToEnd}>End</button>
     </div>
   );

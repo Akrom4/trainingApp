@@ -401,7 +401,19 @@
         color: #313131;    
         padding-right: 1vmin;
     }
+    
+    .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
+    .game-navigator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em;
+      }
     #app {
         overscroll-behavior: contain;
         display: flex;

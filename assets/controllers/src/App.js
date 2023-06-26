@@ -41,9 +41,11 @@ function App() {
 
   return (
     <div id="app">
-      <Referee fen={fen} />  {/* Pass the FEN as a prop to Referee */}
+      <div className="game-container">
+        <Referee fen={fen} />  {/* Pass the FEN as a prop to Referee */}
+        <GameNavigator gameState={gameState} currentGameStateIndex={currentGameStateIndex} setCurrentGameStateIndex={setCurrentGameStateIndex} />  {/* Pass the handler as a prop to GameNavigator */}
+      </div>
       <PgnReader pgnData={data} onMoveClick={handleMoveClick} gameState={gameState} currentGameStateIndex={currentGameStateIndex} />  {/* Pass the handler as a prop to PgnReader */}
-      <GameNavigator gameState={gameState} currentGameStateIndex={currentGameStateIndex} setCurrentGameStateIndex={setCurrentGameStateIndex} />  {/* Pass the handler as a prop to GameNavigator */}
     </div>
   );
 }
