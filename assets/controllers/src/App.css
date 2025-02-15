@@ -1,4 +1,8 @@
-#app{
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+#app {
     display: flex;
     height: 100vmin;
     background-color: #D0CCD0;
@@ -6,6 +10,3 @@
     align-items: center;
     justify-content: center;
 }
-
-@import "tailwindcss";
-
