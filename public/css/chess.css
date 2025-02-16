@@ -41,47 +41,9 @@
 
     /* Nav Bar */
 
-    .sidebar {
-        color: #D0CCD0;
-        display: flex;
-        flex-direction: column;
-        background: linear-gradient(to bottom, #183B65 0%, #285387 100%);
-        padding: 1%;
-        align-items: center;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        width: 8vmin;
-    }
+    
 
-    #logoDiv {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2vmin;
-        margin-bottom: 10vmin;
-    }
-
-    #logoDiv a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    #logo {
-        width: 100%;
-        height: auto;
-    }
-
-    .icon a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .sidebar div {
-        display: flex;
-        align-items: center;
-    }
-
+    
 
     /* Cards style */
     .row {
