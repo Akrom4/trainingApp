@@ -16,7 +16,7 @@ export function SidebarRender({ isAdmin }) {
     },
     {
       label: "Administration",
-      href: "/admin/dashboard",
+      href: "/admin",
       icon: <span className="material-symbols-outlined text-xl">construction</span>,
       requiresAdmin: true,
     },
