@@ -14,6 +14,7 @@ class HomepageController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
+        dump($this->getUser());
         
         return $this->render('homepage/index.html.twig', [
             'controller_name' => 'HomepageController',

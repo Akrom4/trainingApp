@@ -31,6 +31,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
+        // Check if this is a programmatic login
+        if ($request->attributes->get('_programmatic_login') === true) {
+            return new Passport(
+                new UserBadge($email),
+                new PasswordCredentials('dummy_password'), // No real password check needed
+                [] // No CSRF badge for programmatic login
+            );
+        }
+
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
@@ -46,13 +55,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
+
+
 }
